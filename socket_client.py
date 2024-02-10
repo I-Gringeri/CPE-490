@@ -3,14 +3,14 @@ import socket
 
 def client_program():
     host = socket.gethostname()
-    port = 5000 
+    port = 8000 
 
     client_socket = socket.socket()
     client_socket.connect((host, port))
 
     message = input (" -> ")
 
-    while message.low.strip() != 'bye':
+    while message.lower().strip() != 'bye':
         client_socket.sent(message.encode())
         data = client_socket.recv(1024).decode()
 
