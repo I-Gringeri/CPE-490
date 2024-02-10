@@ -1,7 +1,7 @@
 import socket
 
 def server_program():
-    host = socket.gethostname
+    host = socket.gethostname()
     port = 5000
 
     server_socket = socket.socket()
@@ -12,11 +12,14 @@ def server_program():
     conn, address = server_socket.accept()
     print("Connection from: " + str(address))
     while True:
-        data = conn.recv(1024)
+        data = conn.recv(1024).decode()
         if not data:
             break
-        print("from sonnected user: " +str(data))
-        data = input('->')
+        print("from sonnected user: " + str(data))
+        data = input(' -> ')
         conn.send(data.encoded())
 
     conn.close()
+
+    if __name__ == '__main__':
+        server_program()
