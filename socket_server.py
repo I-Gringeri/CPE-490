@@ -1,25 +1,30 @@
 import socket
 
+
 def server_program():
-    host =  '127.0.0.1' 
-    port = 8000
+    # get the hostname
+    host = socket.gethostname()
 
-    server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    server_socket.bind((host, port))
+    server_socket = socket.socket()  # get instance
+    # look closely. The bind() function takes tuple as argument
+    server_socket.bind((host, 5001))  # bind host address and port together
 
-    #how many clients are listening
+    # configure how many client the server can listen simultaneously
     server_socket.listen(2)
-    conn, address = server_socket.accept()
+    conn, address = server_socket.accept()  # accept new connection
     print("Connection from: " + str(address))
     while True:
+        # receive data stream. it won't accept data packet greater than 1024 bytes
         data = conn.recv(1024).decode()
         if not data:
+            # if data is not received break
             break
-        print("from sonnected user: " + str(data))
+        print("from connected user: " + str(data))
         data = input(' -> ')
-        conn.send(data.encoded())
+        conn.send(data.encode())  # send data to the client
 
-    conn.close()
+    conn.close()  # close the connection
 
-    if __name__ == '__main__':
-        server_program()
+
+if __name__ == '__main__':
+    server_program()
